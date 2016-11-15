@@ -7,11 +7,11 @@
 ###############################################################################################################
 extends Spatial
 
-export var eyes_distance = .6
-export var eyes_convergence = 18.0
+export var eyes_distance = .65
+export var eyes_convergence = 45.0
 export var fov = 60
 export var near = 0.1
-export var far = 100
+export var far = 200
 
 var left_eye = null
 var right_eye = null
@@ -53,6 +53,12 @@ func _ready():
 	# get our eyes for easy access
 	left_eye = get_node( 'Viewport_left/Camera_left' )
 	right_eye = get_node( 'Viewport_right/Camera_right' )
+	
+	# use double aspect ratio on PC/Mac, our output will be stretched and overlaid
+	var OSName = OS.get_name()
+	if ((OSName == "OSX") || (OSName == "Windows") || (OSName == "WinRT") || (OSName == "X11")):
+		left_eye.set_keep_aspect_mode(2)
+		right_eye.set_keep_aspect_mode(2)
 
 	# make sure our cameras are setup properly
 	left_eye.set_perspective(fov, near, far)

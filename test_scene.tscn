@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://test_scene.gd" type="Script" id=1]
 [ext_resource path="res://addons/stereo_camera/stereo_camera.tscn" type="PackedScene" id=2]
 
 [sub_resource type="Environment" id=1]
 
-ambient_light/enabled = true
+ambient_light/enabled = false
 ambient_light/color = Color( 0.0588512, 0.0488434, 0.128906, 1 )
 ambient_light/energy = 1.0
 fxaa/enabled = false
@@ -58,6 +58,43 @@ flags/lightmap_on_uv2 = true
 flags/colarray_is_srgb = true
 params/blend_mode = 0
 params/depth_draw = 1
+params/line_width = 8.9159e-41
+fixed_flags/use_alpha = false
+fixed_flags/use_color_array = false
+fixed_flags/use_point_size = false
+fixed_flags/discard_alpha = false
+fixed_flags/use_xy_normalmap = false
+params/diffuse = Color( 0.00846863, 0.722656, 0.304187, 1 )
+params/specular = Color( 0, 0, 0, 1 )
+params/emission = Color( 0, 0, 0, 1 )
+params/specular_exp = 40
+params/detail_mix = 1.0
+params/normal_depth = 1
+params/shader = 0
+params/shader_param = 0.5
+params/glow = 0
+params/point_size = 1.0
+uv_xform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+textures/diffuse_tc = 0
+textures/detail_tc = 0
+textures/specular_tc = 0
+textures/emission_tc = 0
+textures/specular_exp_tc = 0
+textures/glow_tc = 0
+textures/normal_tc = 0
+textures/shade_param_tc = 0
+
+[sub_resource type="FixedMaterial" id=3]
+
+flags/visible = true
+flags/double_sided = false
+flags/invert_faces = false
+flags/unshaded = false
+flags/on_top = false
+flags/lightmap_on_uv2 = true
+flags/colarray_is_srgb = true
+params/blend_mode = 0
+params/depth_draw = 1
 params/line_width = 0.0
 fixed_flags/use_alpha = false
 fixed_flags/use_color_array = false
@@ -100,7 +137,7 @@ params/bake_mode = 0
 params/energy = 1.0
 colors/diffuse = Color( 1, 0.978638, 0.804688, 1 )
 colors/specular = Color( 1, 1, 1, 1 )
-shadow/shadow = false
+shadow/shadow = true
 shadow/darkening = 0.0
 shadow/z_offset = 0.05
 shadow/z_slope_scale = 0.0
@@ -108,7 +145,7 @@ shadow/esm_multiplier = 60.0
 shadow/blur_passes = 1.0
 projector = null
 operator = 0
-shadow/mode = 1
+shadow/mode = 3
 shadow/max_distance = 0.0
 shadow/split_weight = 0.5
 shadow/zoffset_scale = 2.0
@@ -124,7 +161,7 @@ params/bake_mode = 0
 params/energy = 0.88
 colors/diffuse = Color( 0.242188, 0, 1, 1 )
 colors/specular = Color( 1, 1, 1, 1 )
-shadow/shadow = false
+shadow/shadow = true
 shadow/darkening = 0.0
 shadow/z_offset = 0.05
 shadow/z_slope_scale = 0.0
@@ -144,7 +181,6 @@ environment = SubResource( 1 )
 
 [node name="landscape" type="Spatial" parent="."]
 
-editor/display_folded = true
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="ground" type="TestCube" parent="landscape"]
@@ -153,7 +189,7 @@ _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 100, 0, 0, 0, 0.1, 0, 0, 0, 100, 0, -1.02222, 0 )
 layers = 1
 geometry/visible = true
-geometry/material_override = null
+geometry/material_override = SubResource( 2 )
 geometry/cast_shadow = 1
 geometry/receive_shadows = true
 geometry/range_begin = 0.0
@@ -172,7 +208,7 @@ _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.40363 )
 layers = 1
 geometry/visible = true
-geometry/material_override = SubResource( 2 )
+geometry/material_override = SubResource( 3 )
 geometry/cast_shadow = 1
 geometry/receive_shadows = true
 geometry/range_begin = 0.0
@@ -1993,6 +2029,7 @@ geometry/baked_light_tex_id = 0
 [node name="Origin" type="Spatial" parent="."]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35517, 0 )
 
 [node name="stereo_camera" parent="Origin" instance=ExtResource( 2 )]
 
@@ -2055,5 +2092,29 @@ margin/bottom = 57.0
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[node name="SpotLight" type="SpotLight" parent="."]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1, 0, 0, 0, 0.875019, 0.484089, 0, -0.484089, 0.875019, 0, 2.69492, -2.9776 )
+layers = 1
+params/enabled = true
+params/editor_only = false
+params/bake_mode = 0
+params/energy = 1.0
+colors/diffuse = Color( 1, 1, 1, 1 )
+colors/specular = Color( 1, 1, 1, 1 )
+shadow/shadow = true
+shadow/darkening = 0.0
+shadow/z_offset = 0.05
+shadow/z_slope_scale = 0.0
+shadow/esm_multiplier = 60.0
+shadow/blur_passes = 1.0
+projector = null
+operator = 0
+params/radius = 10.0
+params/attenuation = 1.0
+params/spot_angle = 30.0
+params/spot_attenuation = 1.0
 
 
