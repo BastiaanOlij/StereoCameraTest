@@ -25,6 +25,24 @@ func get_eye_convergence():
 func get_right_viewport_offset():
 	return get_node("ViewportSprite_right").get_offset().x
 	
+func update_cams():
+	# setup our projection	
+	left_eye.set_perspective_for_eye(fov, near, far, 0, eyes_distance, eyes_convergence)
+	right_eye.set_perspective_for_eye(fov, near, far, 1, eyes_distance, eyes_convergence)
+	
+	# set our offset
+	left_eye.set_h_offset(-eyes_distance / 2.0);
+	right_eye.set_h_offset(eyes_distance / 2.0);
+	
+	# use double width on PC/Mac, our output will be stretched and overlaid
+	#var OSName = OS.get_name()
+	#if ((OSName == "OSX") || (OSName == "Windows") || (OSName == "WinRT") || (OSName == "X11")):
+	#	left_eye.left *= 2
+	#	left_eye.right *= 2
+	#	right_eye.left *= 2
+	#	right_eye.right *= 2
+
+	
 func set_camera(p_eye_distance, p_eye_convergence):
 	if ((eyes_distance == p_eye_distance) && (eyes_convergence == p_eye_convergence)):
 		return
@@ -32,8 +50,7 @@ func set_camera(p_eye_distance, p_eye_convergence):
 	eyes_distance = p_eye_distance
 	eyes_convergence = p_eye_convergence
 
-	left_eye.set_eye(1, eyes_distance, eyes_convergence)
-	right_eye.set_eye(2, eyes_distance, eyes_convergence)
+	update_cams()
 
 func resize():
 	# Called when the main window resizes, resizes our viewports accordingly
@@ -52,22 +69,10 @@ func _ready():
 
 	# get our eyes for easy access
 	left_eye = get_node( 'Viewport_left/Camera_left' )
-	right_eye = get_node( 'Viewport_right/Camera_right' )
-	
-	# use double aspect ratio on PC/Mac, our output will be stretched and overlaid
-	var OSName = OS.get_name()
-	if ((OSName == "OSX") || (OSName == "Windows") || (OSName == "WinRT") || (OSName == "X11")):
-		left_eye.set_keep_aspect_mode(2)
-		right_eye.set_keep_aspect_mode(2)
+	right_eye = get_node( 'Viewport_right/Camera_right' )	
 
 	# make sure our cameras are setup properly
-	left_eye.set_perspective(fov, near, far)
-	left_eye.set_eye(1, eyes_distance, eyes_convergence)
-	right_eye.set_perspective(fov, near, far)
-	right_eye.set_eye(2, eyes_distance, eyes_convergence)
-
-	# TODO find a way to determine if we need to double the aspect ratio especially once we implement Left/Right buffer when supported
-	# double aspect ratio is ONLY needed for splitscreen when the output is meant for a monitor or TV 
+	update_cams()
 	
 	# make sure we get process updates
 	set_process(true)

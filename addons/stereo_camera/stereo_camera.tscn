@@ -32,9 +32,11 @@ gui/disable_input = false
 [node name="Camera_left" type="Camera" parent="Viewport_left"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-projection = 0
-fov = 100.0
-eye = 1
+projection = 2
+left = 0.5
+right = 0.5
+top = 0.5
+bottom = 0.5
 near = 0.1
 far = 1000.0
 keep_aspect = 1
@@ -64,9 +66,11 @@ gui/disable_input = false
 [node name="Camera_right" type="Camera" parent="Viewport_right"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-projection = 0
-fov = 100.0
-eye = 2
+projection = 2
+left = 0.5
+right = 0.5
+top = 0.5
+bottom = 0.5
 near = 0.1
 far = 1000.0
 keep_aspect = 1
