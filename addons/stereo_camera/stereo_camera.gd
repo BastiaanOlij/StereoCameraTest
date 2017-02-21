@@ -7,7 +7,7 @@
 ###############################################################################################################
 extends Spatial
 
-export var eyes_distance = .65
+export var eyes_distance = .6
 export var eyes_convergence = 45.0
 export var fov = 60
 export var near = 0.1
